@@ -1,0 +1,1165 @@
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+
+  --poke-principal: #e3350d;
+
+  --poke-secundario: #ffffff;
+
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  min-height: 100vh;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+}
+
+
+/* =====================================================
+   FONDO POKÉ BALL
+===================================================== */
+
+.contenedor-pokedex {
+
+  min-height: 100vh;
+
+  padding:
+    35px
+    25px
+    80px;
+
+  background:
+
+    linear-gradient(
+
+      to bottom,
+
+      #e3350d 0%,
+
+      #e3350d 43%,
+
+      #171717 43%,
+
+      #171717 57%,
+
+      #f5f5f5 57%,
+
+      #f5f5f5 100%
+
+    );
+
+}
+
+
+/* =====================================================
+   TÍTULO
+===================================================== */
+
+.titulo-pokedex {
+
+  margin:
+    10px 0 25px;
+
+  text-align: center;
+
+  font-size: 52px;
+
+  font-weight: 900;
+
+  letter-spacing: 8px;
+
+  color: white;
+
+  text-shadow:
+
+    4px 4px 0 #1b1b1b,
+
+    -2px -2px 0 #1b1b1b,
+
+    2px -2px 0 #1b1b1b,
+
+    -2px 2px 0 #1b1b1b;
+
+}
+
+
+/* =====================================================
+   LÍNEA DE POKÉ BALL
+===================================================== */
+
+.pokeball-linea {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 12px;
+
+  margin-bottom: 45px;
+
+  background: #171717;
+
+  border-radius: 10px;
+
+}
+
+
+.pokeball-centro {
+
+  position: absolute;
+
+  width: 45px;
+
+  height: 45px;
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  background: #f5f5f5;
+
+  border:
+    8px solid #171717;
+
+  border-radius: 50%;
+
+  box-shadow:
+
+    0 0 0 5px
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.pokemon-grid {
+
+  width:
+    min(
+      1100px,
+      95%
+    );
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 22px;
+
+}
+
+
+/* =====================================================
+   TARJETAS PEQUEÑAS
+===================================================== */
+
+.pokemon-item {
+
+  position: relative;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
+
+  border-radius: 20px;
+
+  padding: 15px;
+
+  min-height: 230px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  box-shadow:
+
+    0 10px 25px
+    rgba(
+      0,
+      0,
+      0,
+      0.20
+    );
+
+  transition:
+
+    transform 0.25s ease,
+
+    box-shadow 0.25s ease;
+
+}
+
+
+.pokemon-item:hover {
+
+  transform:
+    translateY(-8px)
+    scale(1.03);
+
+  box-shadow:
+
+    0 18px 35px
+    rgba(
+      0,
+      0,
+      0,
+      0.30
+    );
+
+}
+
+
+/* =====================================================
+   IMAGEN PEQUEÑA
+===================================================== */
+
+.pokemon-mini-img {
+
+  width: 160px;
+
+  height: 160px;
+
+  object-fit: contain;
+
+  filter:
+
+    drop-shadow(
+      0 8px 7px
+      rgba(
+        0,
+        0,
+        0,
+        0.20
+      )
+    );
+
+  transition:
+    transform 0.25s ease;
+
+}
+
+
+.pokemon-item:hover
+.pokemon-mini-img {
+
+  transform:
+    scale(1.08);
+
+}
+
+
+/* =====================================================
+   NÚMERO
+===================================================== */
+
+.pokemon-number {
+
+  margin-top: 5px;
+
+  color: #777;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+/* =====================================================
+   NOMBRE
+===================================================== */
+
+.pokemon-name {
+
+  margin-top: 5px;
+
+  color: #665d6e;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-pokedex .modal-dialog {
+
+  width: 430px;
+
+  max-width: 90vw;
+
+  margin:
+    1.75rem auto;
+
+}
+
+
+.modal-pokedex .modal-content {
+
+  background: transparent;
+
+  border: none;
+
+}
+
+
+/* =====================================================
+   FONDO DIFUMINADO
+===================================================== */
+
+.modal-backdrop.show {
+
+  opacity: 1 !important;
+
+  background:
+
+    radial-gradient(
+
+      circle at center,
+
+      var(--poke-principal),
+
+      #101010 80%
+
+    ) !important;
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+}
+
+
+/* =====================================================
+   CUERPO MODAL
+===================================================== */
+
+.modal-pokemon {
+
+  padding: 0;
+
+  background: transparent;
+
+}
+
+
+/* =====================================================
+   TARJETA GRANDE
+===================================================== */
+
+.pokemon-card {
+
+  position: relative;
+
+  width: 430px;
+
+  max-width: 90vw;
+
+  margin: auto;
+
+  overflow: hidden;
+
+  border: none !important;
+
+  border-radius: 25px !important;
+
+  padding: 20px;
+
+  color: #1c1c1c;
+
+  background:
+
+    linear-gradient(
+
+      135deg,
+
+      var(--poke-principal),
+
+      var(--poke-secundario)
+
+    ) !important;
+
+  box-shadow:
+
+    0 25px 60px
+    rgba(
+      0,
+      0,
+      0,
+      0.50
+    );
+
+  animation:
+
+    aparecerPokemon
+    0.3s
+    ease;
+
+}
+
+
+/* =====================================================
+   BRILLO
+===================================================== */
+
+.pokemon-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+
+  height: 300px;
+
+  top: -150px;
+
+  right: -120px;
+
+  background:
+
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  border-radius: 50%;
+
+  filter: blur(8px);
+
+  pointer-events: none;
+
+}
+
+
+/* =====================================================
+   ANIMACIÓN
+===================================================== */
+
+@keyframes aparecerPokemon {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      scale(0.85)
+      translateY(20px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+
+  }
+
+}
+
+
+/* =====================================================
+   PARTE SUPERIOR
+===================================================== */
+
+.card-top {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  font-weight: 900;
+
+  font-size: 15px;
+
+}
+
+
+/* =====================================================
+   HP
+===================================================== */
+
+.poke-hp {
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.70
+    );
+
+  padding:
+    6px
+    12px;
+
+  border-radius:
+    20px;
+
+}
+
+
+/* =====================================================
+   IMAGEN
+===================================================== */
+
+.img-wrapper {
+
+  position: relative;
+
+  z-index: 2;
+
+  height: 220px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+/* =====================================================
+   CÍRCULO
+===================================================== */
+
+.circulo-imagen {
+
+  width: 190px;
+
+  height: 190px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border-radius: 50%;
+
+  background:
+
+    rgba(
+      255,
+      255,
+      255,
+      0.30
+    );
+
+  box-shadow:
+
+    inset 0 0 30px
+    rgba(
+      255,
+      255,
+      255,
+      0.30
+    ),
+
+    0 10px 25px
+    rgba(
+      0,
+      0,
+      0,
+      0.15
+    );
+
+}
+
+
+/* =====================================================
+   IMAGEN POKÉMON
+===================================================== */
+
+.pokemon-img {
+
+  width: 185px !important;
+
+  height: 185px;
+
+  object-fit: contain;
+
+  filter:
+
+    drop-shadow(
+      0 15px 10px
+      rgba(
+        0,
+        0,
+        0,
+        0.30
+      )
+    );
+
+  transition:
+    transform 0.3s ease;
+
+}
+
+
+.pokemon-card:hover
+.pokemon-img {
+
+  transform:
+    scale(1.08)
+    translateY(-5px);
+
+}
+
+
+/* =====================================================
+   NOMBRE
+===================================================== */
+
+.poke-titulo {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin:
+    5px
+    0
+    12px;
+
+  text-align: center;
+
+  font-size:
+    24px !important;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color:
+    #1c1c1c !important;
+
+}
+
+
+/* =====================================================
+   TIPOS
+===================================================== */
+
+.tipo-contenedor {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.badge-tipo {
+
+  padding:
+    7px
+    16px;
+
+  border-radius: 50px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.75
+    );
+
+  color: #1c1c1c;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+
+    0 5px 12px
+    rgba(
+      0,
+      0,
+      0,
+      0.15
+    );
+
+}
+
+
+/* =====================================================
+   INFORMACIÓN
+===================================================== */
+
+.info {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.stat-box {
+
+  padding:
+    9px 5px;
+
+  text-align: center;
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.65
+    );
+
+}
+
+
+.stat-box p {
+
+  margin:
+    4px 0 0;
+
+  font-weight: 700;
+
+  font-size: 13px;
+
+}
+
+
+.stat-label {
+
+  display: block;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  opacity: 0.60;
+
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+===================================================== */
+
+.stats {
+
+  position: relative;
+
+  z-index: 2;
+
+  padding:
+    10px 12px;
+
+  margin-bottom: 12px;
+
+  border-radius: 15px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+
+}
+
+
+/* =====================================================
+   FILAS
+===================================================== */
+
+.stat-row {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    5px 3px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      0,
+      0,
+      0,
+      0.08
+    );
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+}
+
+
+.stat-row:last-child {
+
+  border-bottom: none;
+
+}
+
+
+/* =====================================================
+   VALORES
+===================================================== */
+
+.stat-valor {
+
+  width: 55%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+}
+
+
+.barra-stat {
+
+  height: 6px;
+
+  min-width: 3px;
+
+  border-radius: 10px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.55
+    );
+
+  transition:
+    width 0.5s ease;
+
+}
+
+
+/* =====================================================
+   PARTE INFERIOR
+===================================================== */
+
+.card-bottom {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  opacity: 0.70;
+
+}
+
+
+.estrellas {
+
+  letter-spacing: 3px;
+
+}
+
+
+/* =====================================================
+   BOTÓN
+===================================================== */
+
+.boton-cerrar {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
+  margin:
+    15px
+    auto
+    0;
+
+  padding:
+    8px
+    30px !important;
+
+  border:
+    none !important;
+
+  border-radius:
+    50px !important;
+
+  font-size: 12px !important;
+
+  font-weight:
+    900 !important;
+
+  letter-spacing:
+    2px;
+
+  transition:
+    transform 0.2s ease;
+
+}
+
+
+.boton-cerrar:hover {
+
+  transform:
+    scale(1.05);
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .pokemon-grid {
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+  }
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .contenedor-pokedex {
+
+    padding:
+      25px
+      12px
+      50px;
+
+  }
+
+
+  .titulo-pokedex {
+
+    font-size: 35px;
+
+    letter-spacing: 5px;
+
+  }
+
+
+  .pokemon-grid {
+
+    width: 100%;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 12px;
+
+  }
+
+
+  .pokemon-item {
+
+    min-height: 190px;
+
+    padding: 10px;
+
+  }
+
+
+  .pokemon-mini-img {
+
+    width: 125px;
+
+    height: 125px;
+
+  }
+
+
+  .pokemon-name {
+
+    font-size: 13px;
+
+  }
+
+
+  .modal-pokedex .modal-dialog {
+
+    width: 360px;
+
+    max-width: 92vw;
+
+    margin:
+      1rem auto;
+
+  }
+
+
+  .pokemon-card {
+
+    width: 360px;
+
+    max-width: 92vw;
+
+    padding: 16px;
+
+  }
+
+
+  .img-wrapper {
+
+    height: 190px;
+
+  }
+
+
+  .circulo-imagen {
+
+    width: 165px;
+
+    height: 165px;
+
+  }
+
+
+  .pokemon-img {
+
+    width: 160px !important;
+
+    height: 160px;
+
+  }
+
+
+  .poke-titulo {
+
+    font-size:
+      21px !important;
+
+  }
+
+
+  .stat-box p {
+
+    font-size: 11px;
+
+  }
+
+}
